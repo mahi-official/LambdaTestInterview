@@ -5,15 +5,9 @@ from typing import Optional
 
 app = FastAPI()
 
-# Allow your frontend origin
-origins = [
-    "http://localhost:3000",  # React app
-    '*'                       # All origins
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -29,11 +23,11 @@ logos  = {
 
 @app.get("/plans")    
 def get_premiums(
-    gender: Optional[str] = None,
-    location: Optional[str] = None,
-    sumInsured: Optional[str] = None,
-    ageGroup: Optional[str] = None,
-    planType: Optional[str] = None,
+    gender: Optional[str] = 'Male',
+    location: Optional[str] = 'Urban',
+    sumInsured: Optional[str] = '0',
+    ageGroup: Optional[str] = '18-24',
+    planType: Optional[str] = 'Health',
 ):
     # Extract age from age group (taking the lower bound)
     age = int(ageGroup.split('-')[1]) if ageGroup else 0
